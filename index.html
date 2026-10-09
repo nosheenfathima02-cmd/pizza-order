@@ -154,7 +154,7 @@ textarea{width:100%;min-height:120px;resize:vertical}
     <div class="grid2">
       <label class="f">Upload file (.xlsx, .xls, .csv)<input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt"></label>
       <label class="f">When saving
-        <select id="mode"><option value="replace">Replace the whole list</option><option value="add">Add to the current list</option></select>
+        <select id="mode"><option value="add">Add to the current list (keeps everyone)</option><option value="replace">Replace the whole list (deletes everyone else)</option></select>
       </label>
     </div>
     <label class="f">Or paste (one person per line: Name, Grade, Gender)
@@ -184,7 +184,7 @@ textarea{width:100%;min-height:120px;resize:vertical}
    - If you host this file somewhere else (GitHub Pages, school website),
      paste your Apps Script web app /exec link here.
    ===================================================================== */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxCQCiR_hijhUncb5qb9tviyfnyXSSxIobH5pB16oAsdg01ACoP537w6Kk7uGcvyjcBeg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS0kudUrwGNGb7RDelZuu7Ywu9vDX1NrUNGlIekJfFRjZd1kngo35bBHkmZ9IbW9haag/exec';
 
 (function(){
 const $=s=>document.querySelector(s);
@@ -298,7 +298,7 @@ function showPreview(list){
   const chips=GROUPS.filter(g=>counts[g.k]).map(g=>`<span class="chip${g.k==='check'?' warn':''}">${g.label}: ${counts[g.k]}</span>`).join('');
   box.innerHTML=`<div class="preview"><div><b>${list.length}</b> people found.</div><div class="chips">${chips}</div>
     ${counts.check?'<div style="color:var(--bad)">Some people are missing a grade, or boy/girl for Grades 5–10. They will go in "Needs checking", where you can fix them.</div>':''}
-    <div class="rowflex"><button class="btn primary" id="saveRoster">Save to spreadsheet (${$('#mode').value==='replace'?'replace list':'add to list'})</button><button class="btn" id="cancelRoster">Cancel</button></div></div>`;
+    <div class="rowflex">${$('#mode').value==='replace'?`<div style="color:var(--bad);font-weight:600">This will delete the ${roster.length} people already on the list and keep only these ${list.length}.</div>`:''}<button class="btn primary" id="saveRoster">${$('#mode').value==='replace'?'Replace whole list':'Add to list'}</button><button class="btn" id="cancelRoster">Cancel</button></div></div>`;
   $('#saveRoster').onclick=saveRoster;
   $('#cancelRoster').onclick=()=>{pendingPeople=null;box.innerHTML=''};
 }
@@ -316,27 +316,31 @@ $('#mode').onchange=()=>{if(pendingPeople)showPreview(pendingPeople)};
 
 function dedupe(list){const m=new Map();list.forEach(p=>m.set(p.id,p));return [...m.values()]}
 let rosterChain=Promise.resolve();
-function writeRoster(list){
+// mode 'add' sends only the changed people and never deletes anyone in the sheet.
+function writeRoster(list,mode,changed){
   roster=list; renderAll();
-  const payload=list.map(p=>({id:p.id,name:p.name,grade:p.grade,gender:p.gender,group:groupLabel(p)}));
+  const payload=(changed||list).map(p=>({id:p.id,name:p.name,grade:p.grade,gender:p.gender,group:groupLabel(p)}));
   setStatus('Saving list…');
-  rosterChain=rosterChain.then(()=>api('saveRoster',{people:payload}))
+  rosterChain=rosterChain.then(()=>api('saveRoster',{people:payload,mode:mode||'add'}))
     .then(()=>{setStatus('List saved to spreadsheet');toast('List saved')})
     .catch(e=>setStatus('Could not save the list: '+e,true));
   return rosterChain;
 }
 function saveRoster(){
   if(!pendingPeople) return;
-  const list=$('#mode').value==='replace'?dedupe(pendingPeople):dedupe(roster.concat(pendingPeople));
+  const add=dedupe(pendingPeople), replace=$('#mode').value==='replace';
   pendingPeople=null;$('#previewBox').innerHTML='';$('#pasteBox').value='';
-  writeRoster(list);
+  if(replace) writeRoster(add,'replace');
+  else writeRoster(dedupe(roster.concat(add)),'add',add);
+  $('#mode').value='add';
 }
 $('#addGrade').innerHTML='<option value="">—</option>'+GRADE_OPTS.map(g=>`<option value="${g}">${gradeTxt(g)}</option>`).join('');
 $('#addForm').addEventListener('submit',e=>{
   e.preventDefault();
   const name=$('#addName').value.trim().replace(/\s+/g,' '); if(!name) return;
   const grade=$('#addGrade').value, gender=$('#addGender').value;
-  writeRoster(dedupe(roster.concat([{id:makeId(name,grade),name,grade,gender}])));
+  const np={id:makeId(name,grade),name,grade,gender};
+  writeRoster(dedupe(roster.concat([np])),'add',[np]);
   $('#addName').value='';
 });
 
@@ -451,14 +455,17 @@ function renderEditor(){
   $('#edCancel').onclick=()=>{editing=null;renderEditor()};
   $('#edRemove').onclick=()=>{
     const b=$('#edRemove');
-    if(b.dataset.sure){editing=null;writeRoster(roster.filter(x=>x.id!==p.id))}
+    if(b.dataset.sure){
+      editing=null;roster=roster.filter(x=>x.id!==p.id);renderAll();
+      api('removePerson',{id:p.id}).then(()=>toast('Removed '+p.name)).catch(e=>setStatus('Could not remove: '+e,true));
+    }
     else{b.dataset.sure='1';b.textContent='Tap again to remove'}
   };
   $('#editForm').onsubmit=e=>{
     e.preventDefault();
     const np={id:p.id,name:$('#edName').value.trim()||p.name,grade:$('#edGrade').value,gender:$('#edGender').value};
     const list=roster.some(x=>x.id===p.id)?roster.map(x=>x.id===p.id?np:x):roster.concat([np]);
-    editing=null;writeRoster(list);
+    editing=null;writeRoster(list,'add',[np]);
     if(orders.has(p.id)) changeOrder(p.id,{});
   };
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -560,7 +567,7 @@ async function load(){
     if(typing&&!changed) renderLight(); else if(typing) renderLight(); else renderAll();
     if(!dirty.size) setStatus('Up to date · '+new Date().toLocaleTimeString('en-CA',{hour:'numeric',minute:'2-digit'}));
     if(!roster.length) $('#rosterPanel').open=true;
-    if(missingIds) writeRoster(roster); // gives names typed into the sheet a permanent ID
+    if(missingIds) writeRoster(roster,'add'); // gives names typed into the sheet a permanent ID
   }catch(e){
     loading=false;
     if(e==='NO_URL'){
