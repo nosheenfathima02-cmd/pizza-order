@@ -9,100 +9,153 @@
 <style>
 :root{
   --bg:#f5f4f1; --surface:#ffffff; --sunk:#ecebe6; --line:#dddad2; --fg:#1f1b18; --muted:#6c655e;
-  --accent:#c2411c; --accent-ink:#ffffff; --cheese:#b57d0e; --cheese-bg:#fbf0d6; --salami:#a3302d; --salami-bg:#f6dedb;
-  --ok:#2e7a4c; --ok-bg:#dcefe2; --bad:#b4261c; --bad-bg:#f8dcd8; --ordered:#fff8ef;
+  --accent:#c2411c; --accent-ink:#ffffff; --cheese:#a36f08; --cheese-bg:#fbf0d6; --salami:#a3302d; --salami-bg:#f6dedb;
+  --ok:#2e7a4c; --ok-bg:#dcefe2; --bad:#b4261c; --bad-bg:#f8dcd8; --ordered:#fff6ea; --shadow:0 -8px 30px rgba(40,25,15,.18);
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --body:"Figtree","Segoe UI",system-ui,sans-serif;
-  --r:10px; color-scheme:light;
+  --r:12px; color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root{
-  --bg:#181614; --surface:#211e1b; --sunk:#2a2623; --line:#3a3530; --fg:#f1ece6; --muted:#a69d94;
+  --bg:#181614; --surface:#211e1b; --sunk:#2c2825; --line:#3a3530; --fg:#f1ece6; --muted:#a69d94;
   --accent:#ec6a42; --accent-ink:#1a0f0b; --cheese:#f0b743; --cheese-bg:#3a2e14; --salami:#f07a74; --salami-bg:#3d1f1d;
-  --ok:#6cc58e; --ok-bg:#1d3326; --bad:#ff8a7e; --bad-bg:#3d1d1a; --ordered:#2a231c; color-scheme:dark}}
+  --ok:#6cc58e; --ok-bg:#1d3326; --bad:#ff8a7e; --bad-bg:#3d1d1a; --ordered:#2a231c; --shadow:0 -8px 30px rgba(0,0,0,.5); color-scheme:dark}}
 *{box-sizing:border-box}
 html,body{margin:0}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.45}
 [hidden]{display:none!important}
-.wrap{max-width:980px;margin:0 auto;padding-inline:16px;padding-block:18px 60px;display:grid;gap:16px}
+.wrap{max-width:1000px;margin:0 auto;padding-inline:16px;padding-block:16px 40px;display:grid;gap:14px}
+body.sheet-open .wrap{padding-bottom:380px}
 h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance}
-h1{font-size:1.75rem;font-weight:800;letter-spacing:-.01em}
-h2{font-size:1.15rem;font-weight:600}
+h1{font-size:1.6rem;font-weight:800;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer}
 a{color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end;justify-content:space-between}
+.top{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:end;justify-content:space-between}
 .top .sub{color:var(--muted);font-size:.9rem}
-.daybar{display:flex;flex-wrap:wrap;gap:10px;align-items:end}
-label.f{display:grid;gap:4px;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.daybar{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
+label.f{display:grid;gap:4px;font-size:.72rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
 input[type=date],input[type=number],input[type=text],input[type=search],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;min-height:40px;text-transform:none;letter-spacing:0;font-weight:400;color:var(--fg)}
-input[type=number]{width:80px}
-.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;min-height:40px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;color:var(--fg)}
+input[type=number]{width:76px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;min-height:40px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;color:var(--fg)}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.btn:disabled{opacity:.5;cursor:default}
-.status{font-size:.8rem;color:var(--muted);min-height:1.2em}
+.btn.ghost{background:none;border-color:transparent;color:var(--muted)}
+.status{font-size:.8rem;color:var(--muted)}
 .status.err{color:var(--bad);font-weight:600}
 .banner{background:var(--bad-bg);color:var(--bad);border-radius:8px;padding:10px 12px;font-size:.9rem}
 
-.totals{position:sticky;top:0;z-index:5;background:var(--bg);padding-block:8px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:8px 12px;display:grid}
-.tile b{font-family:var(--display);font-size:1.45rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}
-.tile span{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
+.totals{position:sticky;top:0;z-index:6;background:var(--bg);padding-block:6px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 12px;display:grid}
+.tile b{font-family:var(--display);font-size:1.35rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.2}
+.tile span{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
 .tile.cheese b{color:var(--cheese)} .tile.salami b{color:var(--salami)} .tile.ok b{color:var(--ok)} .tile.bad b{color:var(--bad)}
-@media (max-width:620px){.totals{grid-template-columns:repeat(3,minmax(0,1fr))}.tile b{font-size:1.15rem}.tile.hide-sm{display:none}}
+@media (max-width:620px){.totals{grid-template-columns:repeat(3,minmax(0,1fr))}.tile b{font-size:1.1rem}.tile.hide-sm{display:none}}
 
-.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}
-.tab{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-weight:600;font-size:.88rem;display:flex;gap:6px;align-items:center}
-.tab .c{font-size:.75rem;color:var(--muted);font-variant-numeric:tabular-nums}
-.tab[aria-selected=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.tab[aria-selected=true] .c{color:var(--bg);opacity:.75}
-.tab.warn{border-color:var(--bad);color:var(--bad)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;background:var(--sunk);border-radius:10px;padding:3px;gap:3px}
+.seg button{border:0;background:none;border-radius:8px;padding:8px 14px;font-weight:700;color:var(--muted)}
+.seg button[aria-selected=true]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
-.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.filters input[type=search]{flex:1 1 200px;min-width:0}
-.grouphead{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;align-items:baseline}
-.grouphead .gsum{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-weight:700;font-size:.88rem;display:inline-flex;gap:6px;align-items:center;min-height:38px}
+.chip .c{font-size:.72rem;color:var(--muted);font-weight:600;font-variant-numeric:tabular-nums}
+.chip[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip[aria-pressed=true] .c{color:var(--bg);opacity:.75}
+.chip.warn{border-color:var(--bad);color:var(--bad)}
+.chip.warn[aria-pressed=true]{background:var(--bad);color:var(--accent-ink)}
 
-.list{display:grid;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
-.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 12px;padding:10px 12px;border-top:1px solid var(--line);align-items:center}
-.row:first-child{border-top:0}
-.row.has{background:var(--ordered)}
-.who{display:flex;gap:8px;align-items:baseline;min-width:0}
-.nm{background:none;border:0;padding:0;font-weight:600;text-align:left;overflow-wrap:anywhere}
-.nm:hover{text-decoration:underline}
-.gr{font-size:.75rem;color:var(--muted);white-space:nowrap}
-.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-.step{display:flex;align-items:center;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
-.step .lab{font-size:.72rem;font-weight:700;padding:0 8px;text-transform:uppercase;letter-spacing:.04em;align-self:stretch;display:flex;align-items:center}
-.step.cheese .lab{background:var(--cheese-bg);color:var(--cheese)}
-.step.salami .lab{background:var(--salami-bg);color:var(--salami)}
-.step button{border:0;background:var(--sunk);width:34px;height:34px;font-size:1.1rem;font-weight:700}
-.step output{width:28px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
-.amt{width:44px;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
-.paid{border:1px solid var(--line);background:var(--sunk);border-radius:999px;padding:6px 10px;font-size:.8rem;font-weight:700;min-width:84px;color:var(--muted)}
-.row.has .paid[aria-pressed=false]{background:var(--bad-bg);color:var(--bad);border-color:transparent}
-.paid[aria-pressed=true]{background:var(--ok-bg);color:var(--ok);border-color:transparent}
-.note{grid-column:1/-1;width:100%;min-height:34px!important;padding:6px 10px!important;font-size:.88rem!important}
-.row:not(.has):not(.noted) .note{display:none}
-.addnote{display:none;background:none;border:0;color:var(--muted);font-size:.78rem;text-decoration:underline;padding:0}
-.row:not(.has):not(.noted) .addnote{display:inline}
-@media (max-width:620px){.row{grid-template-columns:minmax(0,1fr)}.ctl{justify-content:flex-start}}
+.find{display:flex;gap:8px;flex-wrap:wrap}
+.find input{flex:1 1 240px;min-width:0;font-size:1.05rem;min-height:48px;padding-inline:14px}
 
-.empty{padding:28px 18px;text-align:center;color:var(--muted);display:grid;gap:10px;justify-items:center}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.nt{position:relative;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;display:grid;gap:4px;min-height:64px;align-content:start}
+.nt:hover{border-color:var(--muted)}
+.nt .n{font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.nt .g{font-size:.72rem;color:var(--muted)}
+.nt.has{background:var(--ordered);border-color:var(--cheese)}
+.nt.active{outline:3px solid var(--accent);outline-offset:-1px}
+.badges{display:flex;gap:4px;flex-wrap:wrap}
+.bdg{font-size:.72rem;font-weight:800;border-radius:6px;padding:1px 6px;font-variant-numeric:tabular-nums}
+.bdg.c{background:var(--cheese-bg);color:var(--cheese)}
+.bdg.s{background:var(--salami-bg);color:var(--salami)}
+.bdg.pd{background:var(--ok-bg);color:var(--ok)}
+.bdg.np{background:var(--bad-bg);color:var(--bad)}
+
+.empty{padding:28px 18px;text-align:center;color:var(--muted);display:grid;gap:10px;justify-items:center;background:var(--surface);border:1px dashed var(--line);border-radius:var(--r)}
 .empty h3{color:var(--fg);font-size:1.1rem}
+
+/* order sheet */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:10;display:flex;justify-content:center;pointer-events:none;padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet .in{pointer-events:auto;width:100%;max-width:720px;background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:16px 16px 0 0;box-shadow:var(--shadow);padding:14px 16px 16px;display:grid;gap:12px;max-height:85vh;overflow:auto}
+.sh-head{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.sh-name{font-family:var(--display);font-size:1.35rem;font-weight:800;line-height:1.15}
+.sh-sub{font-size:.85rem;color:var(--muted)}
+.x{border:0;background:var(--sunk);border-radius:999px;width:36px;height:36px;font-size:1.1rem;font-weight:700;flex:none}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.q{border:1px solid transparent;border-radius:10px;padding:10px 4px;font-weight:800;min-height:50px;line-height:1.1}
+.q small{display:block;font-weight:600;font-size:.72rem;opacity:.8}
+.q.c{background:var(--cheese-bg);color:var(--cheese)}
+.q.s{background:var(--salami-bg);color:var(--salami)}
+.q.m{background:var(--sunk);color:var(--fg)}
+.q.on{border-color:currentColor;box-shadow:inset 0 0 0 1px currentColor}
+.steps{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.step{display:flex;align-items:center;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.step .lab{font-size:.75rem;font-weight:800;padding:0 10px;text-transform:uppercase;letter-spacing:.04em;align-self:stretch;display:flex;align-items:center}
+.step.c .lab{background:var(--cheese-bg);color:var(--cheese)}
+.step.s .lab{background:var(--salami-bg);color:var(--salami)}
+.step button{border:0;background:var(--sunk);width:44px;height:44px;font-size:1.3rem;font-weight:700}
+.step output{width:34px;text-align:center;font-weight:800;font-size:1.1rem;font-variant-numeric:tabular-nums}
+.amt{font-family:var(--display);font-size:1.5rem;font-weight:800;font-variant-numeric:tabular-nums;margin-left:auto}
+.payrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pay{border:2px solid var(--line);background:var(--surface);border-radius:10px;min-height:48px;font-weight:800}
+.pay.yes[aria-pressed=true]{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.pay.no[aria-pressed=true]{background:var(--bad-bg);border-color:var(--bad);color:var(--bad)}
+.pay small{display:block;font-weight:600;font-size:.72rem;opacity:.8}
+.owe{background:var(--bad-bg);color:var(--bad);border-radius:10px;padding:10px 12px;display:grid;gap:8px;font-size:.9rem}
+.owe-line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.owe-line b{font-weight:800}
+.owe-line .sp{flex:1}
+.mini{border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:8px;padding:5px 10px;font-weight:700;font-size:.82rem;min-height:34px}
+.mini.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+.etin{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.etin input{min-height:34px;padding:4px 8px;flex:1 1 140px;min-width:0}
+.bdg.ow{background:var(--bad);color:var(--accent-ink)}
+.ptog.et{background:var(--ok-bg);color:var(--ok)}
+.sh-foot{display:flex;gap:8px;flex-wrap:wrap}
+.sh-foot .btn.primary{flex:1;justify-content:center;min-height:48px;font-size:1.05rem}
+.edit-box{display:grid;gap:8px;background:var(--sunk);border-radius:10px;padding:10px}
+@media (max-width:520px){.quick{grid-template-columns:repeat(3,minmax(0,1fr))}.amt{font-size:1.25rem}}
+
+/* who ordered */
+.olist{display:grid;gap:14px}
+.osec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.osec-h{padding:12px 14px;display:grid;gap:6px;border-bottom:1px solid var(--line);background:var(--sunk)}
+.osec-h h3{font-size:1.15rem}
+.ostats{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.88rem;font-variant-numeric:tabular-nums}
+.ostats b{font-weight:800}
+.ostats .c b{color:var(--cheese)} .ostats .s b{color:var(--salami)} .ostats .bad b{color:var(--bad)}
+.oline{display:grid;grid-template-columns:minmax(0,1fr) auto auto auto;gap:4px 12px;align-items:center;padding:9px 14px;border-top:1px solid var(--line)}
+.oline:first-of-type{border-top:0}
+.oline .who{background:none;border:0;padding:0;text-align:left;font-weight:700;overflow-wrap:anywhere}
+.oline .who span{font-weight:500;color:var(--muted);font-size:.8rem;margin-left:6px}
+.oline .what{font-weight:700;font-size:.92rem;white-space:nowrap}
+.oline .what .c{color:var(--cheese)} .oline .what .s{color:var(--salami)}
+.oline .m{font-weight:700;font-variant-numeric:tabular-nums;text-align:right;min-width:42px}
+.ptog{border:0;border-radius:999px;padding:5px 10px;font-size:.78rem;font-weight:800;min-width:78px}
+.ptog.yes{background:var(--ok-bg);color:var(--ok)}
+.ptog.no{background:var(--bad-bg);color:var(--bad)}
+.oline .note{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+@media (max-width:520px){.oline{grid-template-columns:minmax(0,1fr) auto auto}.oline .what{grid-column:1/2;grid-row:2}.oline .m{grid-row:1/3;grid-column:2}.oline .ptog{grid-row:1/3;grid-column:3}}
+
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px}
-details.panel summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:1.05rem}
 .help{font-size:.88rem;color:var(--muted);max-width:68ch}
 .help code{background:var(--sunk);padding:1px 5px;border-radius:4px;font-size:.85em}
 .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 textarea{width:100%;min-height:120px;resize:vertical}
-.preview{font-size:.9rem;background:var(--sunk);border-radius:8px;padding:10px 12px;display:grid;gap:6px}
-.chips{display:flex;flex-wrap:wrap;gap:6px}
-.chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.8rem}
-.chip.warn{color:var(--bad);border-color:var(--bad)}
+.preview{font-size:.9rem;background:var(--sunk);border-radius:8px;padding:10px 12px;display:grid;gap:8px}
 .rowflex{display:flex;flex-wrap:wrap;gap:8px;align-items:end}
-.editor{border:2px solid var(--accent)}
-.toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:20;max-width:calc(100% - 32px)}
+.toast{position:fixed;left:50%;top:12px;transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:20;max-width:calc(100% - 32px)}
 </style>
 </head>
 <body>
@@ -110,12 +163,12 @@ textarea{width:100%;min-height:120px;resize:vertical}
   <header class="top">
     <div>
       <h1>Pizza Day Orders</h1>
-      <div class="sub">Cheese or salami · <span id="priceTxt">$4</span> a slice</div>
+      <div class="sub">Cheese or salami · <span id="priceTxt">$4</span> a slice · <span class="status" id="status">Loading…</span></div>
     </div>
     <div class="daybar">
       <label class="f">Pizza day <input type="date" id="dayInput"></label>
-      <label class="f">Saved days <select id="daySelect"><option value="">—</option></select></label>
-      <label class="f">$ per slice <input type="number" id="priceInput" min="0" step="0.5" value="4"></label>
+      <label class="f">Saved days <select id="daySelect"></select></label>
+      <label class="f">$ / slice <input type="number" id="priceInput" min="0" step="0.5" value="4"></label>
     </div>
   </header>
   <div id="cfgBanner" class="banner" hidden></div>
@@ -128,50 +181,83 @@ textarea{width:100%;min-height:120px;resize:vertical}
     <div class="tile bad hide-sm"><b id="tUnpaid">$0</b><span>Not paid</span></div>
   </div>
 
-  <nav class="tabs" id="tabs" role="tablist" aria-label="Groups"></nav>
-
-  <section style="display:grid;gap:10px">
-    <div class="grouphead"><h2 id="gTitle">Everyone</h2><span class="gsum" id="gSum"></span></div>
-    <div class="filters">
-      <input type="search" id="search" placeholder="Search a name">
-      <select id="show" aria-label="Show">
-        <option value="all">Everyone</option>
-        <option value="ordered">Ordered only</option>
-        <option value="unpaid">Ordered, not paid</option>
-      </select>
-      <button class="btn primary" id="pdfBtn">Download PDF slips</button>
-      <button class="btn" id="refreshBtn">Refresh</button>
-      <a class="btn" id="sheetLink" target="_blank" rel="noopener" hidden>Open spreadsheet</a>
+  <div class="bar">
+    <div class="seg" role="tablist">
+      <button role="tab" data-view="take" aria-selected="true">Take orders</button>
+      <button role="tab" data-view="orders" aria-selected="false">Who ordered</button>
+      <button role="tab" data-view="list" aria-selected="false">Student list</button>
     </div>
-    <div class="status" id="status">Loading…</div>
-    <div id="editor"></div>
-    <div class="list" id="list"></div>
+    <div class="tools">
+      <button class="btn primary" id="pdfBtn" title="One page with a slip for each pizza box">Box slips PDF (1 page)</button>
+      <button class="btn" id="reportBtn" title="Summary by grade and everyone who still owes">Full report PDF</button>
+      <a class="btn" id="backupLink" target="_blank" rel="noopener" hidden>Backups</a>
+      <button class="btn" id="refreshBtn" title="Get the latest from the spreadsheet">Refresh</button>
+      <a class="btn" id="sheetLink" target="_blank" rel="noopener" hidden>Spreadsheet</a>
+    </div>
+  </div>
+
+  <!-- TAKE ORDERS -->
+  <section id="vTake" style="display:grid;gap:12px">
+    <div class="chips" id="gradeChips"></div>
+    <div class="find">
+      <input type="search" id="search" placeholder="Type a name… (press Enter to open)" autocomplete="off">
+      <select id="takeShow" aria-label="Show">
+        <option value="all">Everyone</option>
+        <option value="not">Not ordered yet</option>
+        <option value="ordered">Ordered</option>
+      </select>
+    </div>
+    <div class="names" id="names"></div>
   </section>
 
-  <details class="panel" id="rosterPanel">
-    <summary>Student &amp; teacher list</summary>
-    <p class="help">Upload an Excel or CSV file, or paste the list. Use three columns: <code>Name</code>, <code>Grade</code>, <code>Gender</code>. Grade can be <code>Preschool</code>, <code>JK</code>, <code>SK</code>, <code>KG</code>, <code>1</code> to <code>10</code>, or <code>Teacher</code>. Gender can be <code>M</code>/<code>F</code> or <code>Boy</code>/<code>Girl</code>; it is needed for Grades 5 to 10. You can also type the list straight into the <b>Students</b> tab of the spreadsheet.</p>
-    <div class="grid2">
-      <label class="f">Upload file (.xlsx, .xls, .csv)<input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt"></label>
-      <label class="f">When saving
-        <select id="mode"><option value="add">Add to the current list (keeps everyone)</option><option value="replace">Replace the whole list (deletes everyone else)</option></select>
-      </label>
+  <!-- WHO ORDERED -->
+  <section id="vOrders" style="display:grid;gap:12px" hidden>
+    <div class="chips" id="boxChips"></div>
+    <div class="find">
+      <input type="search" id="oSearch" placeholder="Search a name" autocomplete="off">
+      <select id="oPaid" aria-label="Paid filter">
+        <option value="all">Paid and not paid</option>
+        <option value="no">Not paid only</option>
+        <option value="yes">Paid (cash or E-transfer)</option>
+        <option value="cash">Paid cash</option>
+        <option value="et">Paid E-transfer</option>
+      </select>
     </div>
-    <label class="f">Or paste (one person per line: Name, Grade, Gender)
-      <textarea id="pasteBox" placeholder="Aisha Rahman, 3, F&#10;Yusuf Khan, 7, M&#10;Ms. Fatima, Teacher"></textarea>
-    </label>
-    <div class="rowflex"><button class="btn" id="parseBtn">Check pasted list</button></div>
-    <div id="previewBox"></div>
-    <h3 style="font-size:1rem">Add one person</h3>
-    <form class="rowflex" id="addForm">
-      <label class="f">Name <input type="text" id="addName" required></label>
-      <label class="f">Grade <select id="addGrade"></select></label>
-      <label class="f">Boy / Girl <select id="addGender"><option value="">—</option><option value="M">Boy</option><option value="F">Girl</option></select></label>
-      <button class="btn" type="submit">Add</button>
+    <div id="owesOld"></div>
+    <div class="olist" id="olist"></div>
+  </section>
+
+  <!-- STUDENT LIST -->
+  <section id="vList" style="display:grid;gap:12px" hidden>
+    <div class="panel">
+      <h2 style="font-size:1.15rem">Upload students and teachers</h2>
+      <p class="help">Upload an Excel or CSV file, or paste the list. Columns: <code>Name</code>, <code>Grade</code>, and <code>Gender</code> for Grades 5–10 only. Grade can be <code>Preschool</code>, <code>JK</code>, <code>SK</code>, <code>KG</code>, <code>1</code>–<code>10</code> or <code>Teacher</code>. Gender: <code>M</code>/<code>F</code> or <code>Boy</code>/<code>Girl</code>.</p>
+      <div class="grid2">
+        <label class="f">Upload file (.xlsx, .xls, .csv)<input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.txt"></label>
+        <label class="f">When saving
+          <select id="mode"><option value="add">Add to the current list (keeps everyone)</option><option value="replace">Replace the whole list (deletes everyone else)</option></select>
+        </label>
+      </div>
+      <label class="f">Or paste (one per line: Name, Grade, Gender)
+        <textarea id="pasteBox" placeholder="Laya Ahmed, 1&#10;Yusuf Khan, 7, M&#10;Ms. Fatima, Teacher"></textarea>
+      </label>
+      <div class="rowflex"><button class="btn" id="parseBtn">Check pasted list</button></div>
+      <div id="previewBox"></div>
+    </div>
+    <form class="panel" id="addForm">
+      <h2 style="font-size:1.15rem">Add one person</h2>
+      <div class="rowflex">
+        <label class="f">Name <input type="text" id="addName" required></label>
+        <label class="f">Grade <select id="addGrade"></select></label>
+        <label class="f">Boy / Girl <select id="addGender"><option value="">—</option><option value="M">Boy</option><option value="F">Girl</option></select></label>
+        <button class="btn primary" type="submit">Add</button>
+      </div>
+      <div class="help" id="rosterCount"></div>
     </form>
-    <div class="help" id="rosterCount"></div>
-  </details>
+  </section>
 </div>
+
+<div class="sheet" id="sheet" hidden><div class="in" id="sheetIn"></div></div>
 <div class="toast" id="toast" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -180,54 +266,52 @@ textarea{width:100%;min-height:120px;resize:vertical}
 <script>
 /* =====================================================================
    SETTINGS
-   - If this page runs inside Apps Script (the /exec link), leave SCRIPT_URL empty.
-   - If you host this file somewhere else (GitHub Pages, school website),
-     paste your Apps Script web app /exec link here.
+   - If this page runs inside Apps Script (the /exec link), this is ignored.
+   - If you host this file somewhere else (GitHub Pages), keep your
+     Apps Script web app /exec link here.
    ===================================================================== */
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxS0kudUrwGNGb7RDelZuu7Ywu9vDX1NrUNGlIekJfFRjZd1kngo35bBHkmZ9IbW9haag/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwL1mk7YgyWjrTKy-cJVbcE8xBbQShkUjk_reFI3bNf76ixqiSffnG6vTsDRX7LDafj9A/exec';
 
 (function(){
 const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const GROUPS=[
-  {k:'kg',label:'Kindergarten',sub:'Preschool, JK, SK, KG'},
-  {k:'g12',label:'Grades 1 & 2'},
-  {k:'g3',label:'Grade 3'},
-  {k:'g4',label:'Grade 4'},
-  {k:'boys',label:'Grades 5–10 Boys'},
-  {k:'girls',label:'Grades 5–10 Girls'},
-  {k:'teachers',label:'Teachers'},
-  {k:'check',label:'Needs checking',sub:'Grade or boy/girl missing'}
+  {k:'kg',label:'Kindergarten',short:'Kindergarten'},
+  {k:'g12',label:'Grades 1 & 2',short:'Gr 1 & 2'},
+  {k:'g3',label:'Grade 3',short:'Gr 3'},
+  {k:'g4',label:'Grade 4',short:'Gr 4'},
+  {k:'boys',label:'Grades 5–10 Boys',short:'Gr 5–10 Boys'},
+  {k:'girls',label:'Grades 5–10 Girls',short:'Gr 5–10 Girls'},
+  {k:'teachers',label:'Teachers',short:'Teachers'},
+  {k:'check',label:'Needs checking',short:'Needs checking'}
 ];
 const GRADE_OPTS=['Preschool','JK','SK','KG','1','2','3','4','5','6','7','8','9','10','Teacher'];
+const QUICK=[[1,0],[2,0],[3,0],[0,1],[0,2],[0,3],[1,1],[2,1]];
 
 let roster=[], days=new Set(), orders=new Map(), dirty=new Map(), timers=new Map(), chains=new Map();
-let day=todayStr(), price=4, tab='all', pendingPeople=null, editing=null, loading=false;
+let pastOwing=[], etDraft=null;
+let day=todayStr(), price=4, view='take', gradeSel='all', boxSel='all', openId=null, editOpen=false, pendingPeople=null, loading=false;
 
 /* ---------- backend ---------- */
 const inAppsScript=!!(window.google&&google.script&&google.script.run);
 function api(action,payload){
   payload=payload||{};
   if(inAppsScript){
-    return new Promise((res,rej)=>google.script.run
-      .withSuccessHandler(res)
-      .withFailureHandler(e=>rej(e&&e.message||String(e)))
-      .api(action,payload));
+    return new Promise((res,rej)=>google.script.run.withSuccessHandler(res).withFailureHandler(e=>rej(e&&e.message||String(e))).api(action,payload));
   }
   if(!SCRIPT_URL) return Promise.reject('NO_URL');
   return fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,payload})})
     .then(r=>r.json()).then(r=>{if(r.error)throw r.error;return r.data});
 }
 
-/* ---------- small helpers ---------- */
+/* ---------- helpers ---------- */
 function todayStr(){const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function dayLabel(s){const d=new Date(s+'T12:00:00');return isNaN(d)?s:d.toLocaleDateString('en-CA',{weekday:'short',year:'numeric',month:'short',day:'numeric'})}
 function money(n){n=Math.round(n*100)/100;return '$'+(Number.isInteger(n)?n:n.toFixed(2))}
 function hash(s){let h=5381;for(const ch of s)h=((h<<5)+h+ch.codePointAt(0))>>>0;return h.toString(36)}
 function makeId(name,grade){const slug=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'p';return slug+'-'+hash(name.toLowerCase()+'|'+grade)}
-function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2600)}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,2200)}
 function setStatus(m,err){const s=$('#status');s.textContent=m;s.classList.toggle('err',!!err)}
-
-/* ---------- grade / gender / group ---------- */
 function normGrade(v){
   const s=String(v??'').trim().toLowerCase();
   if(!s) return '';
@@ -259,8 +343,282 @@ function groupOf(p){
 function groupLabel(p){return GROUPS.find(g=>g.k===groupOf(p)).label}
 function gradeRank(g){const i=GRADE_OPTS.indexOf(g);return i<0?50:i}
 function gradeTxt(g){return !g?'Grade ?':(/^\d+$/.test(g)?'Gr '+g:g)}
+function gradeShort(g){return !g?'?':(/^\d+$/.test(g)?'G'+g:(g==='Preschool'?'Pre':g==='Teacher'?'Teacher':g))}
+function whatTxt(o){const a=[];if(o.c)a.push(`<span class="c">${o.c} Cheese</span>`);if(o.s)a.push(`<span class="s">${o.s} Salami</span>`);return a.join(' + ')}
 
-/* ---------- reading the uploaded list ---------- */
+/* ---------- data ---------- */
+function people(){
+  const m=new Map(roster.map(p=>[p.id,p]));
+  for(const [id,o] of orders) if(!m.has(id)&&o.name) m.set(id,{id,name:o.name,grade:o.grade||'',gender:o.gender||''});
+  return [...m.values()].sort((a,b)=>gradeRank(a.grade)-gradeRank(b.grade)||a.name.localeCompare(b.name));
+}
+function person(id){return people().find(p=>p.id===id)}
+function ord(id){return orders.get(id)||{c:0,s:0,pay:'',etFrom:'',paid:false,note:''}}
+function payTxt(o){return o.pay==='cash'?'Cash':o.pay==='et'?('E-transfer'+(o.etFrom?' – '+o.etFrom:'')):'Not paid'}
+function payShort(o){return o.pay==='cash'?'Cash':o.pay==='et'?('ET'+(o.etFrom?' '+o.etFrom:'')):'NOT PAID'}
+function owesOf(id){
+  const p=roster.find(x=>x.id===id)||orders.get(id)||{}, nm=String(p.name||'').toLowerCase();
+  return pastOwing.filter(x=>x.id===id||(!x.id||!roster.some(r=>r.id===x.id))&&nm&&x.name.toLowerCase()===nm);
+}
+function hasOrder(o){return (o.c||0)+(o.s||0)>0}
+function sumOf(list){
+  const t={c:0,s:0,total:0,paid:0,unpaid:0,n:0,np:0,cash:0,et:0};
+  for(const p of list){const o=ord(p.id);if(!hasOrder(o))continue;const amt=(o.c+o.s)*price;t.n++;t.c+=o.c;t.s+=o.s;t.total+=amt;
+    if(o.pay){t.paid+=amt;if(o.pay==='et')t.et+=amt;else t.cash+=amt}else{t.unpaid+=amt;t.np++}}
+  return t;
+}
+
+/* ---------- view switching ---------- */
+document.querySelector('.seg').addEventListener('click',e=>{
+  const b=e.target.closest('[data-view]'); if(!b) return;
+  view=b.dataset.view; renderAll();
+  if(view==='take') setTimeout(()=>$('#search').focus(),0);
+});
+
+/* ---------- TAKE ORDERS ---------- */
+function gradeKeyOf(p){return p.grade==='Teacher'?'Teacher':(p.grade||'')}
+function renderGradeChips(){
+  const all=people(), cnt={}, ordc={};
+  all.forEach(p=>{const k=gradeKeyOf(p);cnt[k]=(cnt[k]||0)+1;if(hasOrder(ord(p.id)))ordc[k]=(ordc[k]||0)+1});
+  const keys=GRADE_OPTS.filter(g=>cnt[g]); if(cnt['']) keys.push('');
+  const tot=sumOf(all).n;
+  let h=`<button class="chip" data-g="all" aria-pressed="${gradeSel==='all'}">All<span class="c">${tot}/${all.length}</span></button>`;
+  h+=keys.map(k=>`<button class="chip${k===''?' warn':''}" data-g="${k}" aria-pressed="${gradeSel===k}">${k===''?'No grade':(k==='Teacher'?'Teachers':gradeShort(k).replace(/^G(\d)/,'Gr $1'))}<span class="c">${ordc[k]||0}/${cnt[k]}</span></button>`).join('');
+  $('#gradeChips').innerHTML=h;
+}
+$('#gradeChips').addEventListener('click',e=>{
+  const b=e.target.closest('[data-g]'); if(!b) return;
+  gradeSel=b.dataset.g; $('#search').value=''; renderGradeChips(); renderNames();
+});
+function takeList(){
+  const q=$('#search').value.trim().toLowerCase(), show=$('#takeShow').value;
+  let l=people();
+  if(q) l=l.filter(p=>p.name.toLowerCase().includes(q));      // search looks in every grade
+  else if(gradeSel!=='all') l=l.filter(p=>gradeKeyOf(p)===gradeSel);
+  if(show==='not') l=l.filter(p=>!hasOrder(ord(p.id)));
+  if(show==='ordered') l=l.filter(p=>hasOrder(ord(p.id)));
+  if(q) l.sort((a,b)=>{const as=a.name.toLowerCase().startsWith(q),bs=b.name.toLowerCase().startsWith(q);return (bs-as)||a.name.localeCompare(b.name)});
+  else if(gradeSel!=='all') l.sort((a,b)=>a.name.localeCompare(b.name));
+  return l;
+}
+function tileInner(p){
+  const o=ord(p.id); let b='';
+  if(o.c) b+=`<span class="bdg c">${o.c} Cheese</span>`;
+  if(o.s) b+=`<span class="bdg s">${o.s} Salami</span>`;
+  if(hasOrder(o)) b+=o.pay?`<span class="bdg pd">${o.pay==='et'?'ET':'Cash'}</span>`:'<span class="bdg np">Not paid</span>';
+  const ow=owesOf(p.id); if(ow.length) b+=`<span class="bdg ow">Owes ${money(ow.reduce((a,x)=>a+x.total,0))}</span>`;
+  return `<span class="n">${esc(p.name)}</span><span class="g">${esc(gradeTxt(p.grade))}${p.gender&&+p.grade>=5?' · '+(p.gender==='M'?'Boy':'Girl'):''}</span>${b?`<span class="badges">${b}</span>`:''}`;
+}
+function renderNames(){
+  const box=$('#names');
+  if(!roster.length&&!orders.size){
+    box.style.display='block';
+    box.innerHTML=loading?'<div class="empty">Loading the list from the spreadsheet…</div>':`<div class="empty"><h3>No student list yet</h3><div>Upload your students and teachers first.</div><button class="btn primary" id="goList">Go to Student list</button></div>`;
+    const g=$('#goList'); if(g) g.onclick=()=>{view='list';renderAll()};
+    return;
+  }
+  const l=takeList();
+  box.style.display='';
+  if(!l.length){box.style.display='block';box.innerHTML='<div class="empty">No one matches. Check the spelling or pick another grade.</div>';return}
+  box.innerHTML=l.map(p=>`<button class="nt${hasOrder(ord(p.id))?' has':''}${p.id===openId?' active':''}" data-id="${esc(p.id)}">${tileInner(p)}</button>`).join('');
+}
+function refreshTile(id){
+  const el=document.querySelector(`.nt[data-id="${CSS.escape(id)}"]`); const p=person(id);
+  if(el&&p){el.innerHTML=tileInner(p);el.classList.toggle('has',hasOrder(ord(id)))}
+}
+$('#names').addEventListener('click',e=>{const t=e.target.closest('.nt'); if(t) openSheet(t.dataset.id)});
+$('#search').addEventListener('input',renderNames);
+$('#search').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){const l=takeList(); if(l.length){e.preventDefault();openSheet(l[0].id)}}
+  if(e.key==='Escape'){$('#search').value='';renderNames()}
+});
+$('#takeShow').addEventListener('change',renderNames);
+
+/* ---------- ORDER SHEET ---------- */
+function openSheet(id){
+  openId=id; editOpen=false;
+  $('#sheet').hidden=false; document.body.classList.add('sheet-open');
+  renderSheet();
+  document.querySelectorAll('.nt.active').forEach(x=>x.classList.remove('active'));
+  const t=document.querySelector(`.nt[data-id="${CSS.escape(id)}"]`); if(t)t.classList.add('active');
+}
+function closeSheet(){
+  openId=null; editOpen=false;
+  $('#sheet').hidden=true; document.body.classList.remove('sheet-open');
+  document.querySelectorAll('.nt.active').forEach(x=>x.classList.remove('active'));
+  if(view==='take'){ if($('#search').value){$('#search').value='';renderNames()} $('#search').focus({preventScroll:true}); }
+}
+function renderSheetFull(){const a=document.activeElement;if(a&&a.blur)a.blur();renderSheet()}
+function renderSheet(){
+  if(!openId) return;
+  const p=person(openId); if(!p){closeSheet();return}
+  const o=ord(openId);
+  const inp=document.activeElement&&['shNote','shEt','oweEt'].includes(document.activeElement.id);
+  if(inp&&$('#shAmt')){ // keep typing smooth: update numbers only
+    $('#shAmt').textContent=money((o.c+o.s)*price);return;
+  }
+  $('#sheetIn').innerHTML=`
+    <div class="sh-head">
+      <div><div class="sh-name">${esc(p.name)}</div><div class="sh-sub">${esc(gradeTxt(p.grade))}${p.gender&&+p.grade>=5?' · '+(p.gender==='M'?'Boy':'Girl'):''} · ${esc(groupLabel(p))} · <button class="btn ghost" style="min-height:0;padding:0;text-decoration:underline" data-a="edit">Edit name/grade</button></div></div>
+      <button class="x" data-a="close" aria-label="Close">✕</button>
+    </div>
+    ${editOpen?`<div class="edit-box"><div class="rowflex">
+      <label class="f">Name <input type="text" id="edName" value="${esc(p.name)}"></label>
+      <label class="f">Grade <select id="edGrade"><option value="">—</option>${GRADE_OPTS.map(g=>`<option value="${g}"${g===p.grade?' selected':''}>${gradeTxt(g)}</option>`).join('')}</select></label>
+      <label class="f">Boy / Girl (Gr 5–10) <select id="edGender"><option value="">—</option><option value="M"${p.gender==='M'?' selected':''}>Boy</option><option value="F"${p.gender==='F'?' selected':''}>Girl</option></select></label>
+      </div><div class="rowflex"><button class="btn primary" data-a="edsave">Save</button><button class="btn" data-a="edcancel">Cancel</button><button class="btn" data-a="remove" style="color:var(--bad)">Remove from list</button></div></div>`:''}
+    <div class="quick">${QUICK.map(([c,s])=>`<button class="q ${c&&s?'m':c?'c':'s'}${o.c===c&&o.s===s?' on':''}" data-a="set" data-c="${c}" data-s="${s}">${c&&s?`${c} Cheese<small>+ ${s} Salami</small>`:c?`${c} Cheese<small>${money(c*price)}</small>`:`${s} Salami<small>${money(s*price)}</small>`}</button>`).join('')}</div>
+    <div class="steps">
+      <div class="step c"><span class="lab">Cheese</span><button data-a="c-" aria-label="One less cheese">−</button><output>${o.c||0}</output><button data-a="c+" aria-label="One more cheese">+</button></div>
+      <div class="step s"><span class="lab">Salami</span><button data-a="s-" aria-label="One less salami">−</button><output>${o.s||0}</output><button data-a="s+" aria-label="One more salami">+</button></div>
+      <span class="amt" id="shAmt">${money((o.c+o.s)*price)}</span>
+    </div>
+    <div class="payrow">
+      <button class="pay no" data-a="pay" data-p="" aria-pressed="${!o.pay}">Not paid<small>pay later</small></button>
+      <button class="pay yes" data-a="pay" data-p="cash" aria-pressed="${o.pay==='cash'}">✓ Cash</button>
+      <button class="pay yes" data-a="pay" data-p="et" aria-pressed="${o.pay==='et'}">✓ E-transfer</button>
+    </div>
+    ${o.pay==='et'?`<input type="text" id="shEt" placeholder="E-transfer sent by (parent name)" maxlength="100" value="${esc(o.etFrom||'')}">`:''}
+    ${oweBlock(openId)}
+    <input type="text" id="shNote" placeholder="Comment (optional): paid cash, pays Monday, absent…" maxlength="200" value="${esc(o.note||'')}">
+    <div class="sh-foot">
+      ${hasOrder(o)?'<button class="btn" data-a="clear" style="color:var(--bad)">Cancel order</button>':''}
+      <button class="btn primary" data-a="done">Done – next student</button>
+    </div>`;
+}
+$('#sheetIn').addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]'); if(!b||!openId) return;
+  const id=openId,o=ord(id),a=b.dataset.a;
+  if(a==='close'||a==='done'){closeSheet();if(a==='done'&&hasOrder(ord(id)))toast('Saved: '+person(id).name);return}
+  if(a==='set') changeOrder(id,{c:+b.dataset.c,s:+b.dataset.s});
+  else if(a==='c+') changeOrder(id,{c:o.c+1});
+  else if(a==='c-') changeOrder(id,{c:o.c-1});
+  else if(a==='s+') changeOrder(id,{s:o.s+1});
+  else if(a==='s-') changeOrder(id,{s:o.s-1});
+  else if(a==='pay'){changeOrder(id,{pay:b.dataset.p});if(b.dataset.p==='et')setTimeout(()=>{const i=$('#shEt');if(i&&!i.value)i.focus()},0)}
+  else if(a==='clear') changeOrder(id,{c:0,s:0,pay:'',etFrom:''});
+  else if(a==='edit'){editOpen=!editOpen;renderSheet()}
+  else if(a==='edcancel'){editOpen=false;renderSheet()}
+  else if(a==='edsave'){
+    const p=person(id);
+    const np={id,name:$('#edName').value.trim().replace(/\s+/g,' ')||p.name,grade:$('#edGrade').value,gender:$('#edGender').value};
+    const list=roster.some(x=>x.id===id)?roster.map(x=>x.id===id?np:x):roster.concat([np]);
+    editOpen=false; writeRoster(list,'add',[np]);
+    if(orders.has(id)) changeOrder(id,{});
+  }
+  else if(a==='remove'){
+    if(b.dataset.sure){
+      const p=person(id); roster=roster.filter(x=>x.id!==id); closeSheet(); renderAll();
+      api('removePerson',{id}).then(()=>toast('Removed '+p.name)).catch(err=>setStatus('Could not remove: '+err,true));
+    } else {b.dataset.sure='1';b.textContent='Tap again to remove'}
+  }
+});
+$('#sheetIn').addEventListener('input',e=>{
+  const f={shNote:'note',shEt:'etFrom'}[e.target.id]; if(!f||!openId) return;
+  const id=openId,val=e.target.value;
+  orders.set(id,{...ord(id),[f]:val});
+  dirty.set(id,(dirty.get(id)||0)+1);
+  clearTimeout(timers.get(f+id));
+  timers.set(f+id,setTimeout(()=>changeOrder(id,{[f]:val}),700));
+});
+$('#sheetIn').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.target.id==='shNote'||e.target.id==='shEt')){e.preventDefault();closeSheet()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&openId)closeSheet()});
+
+/* ---------- WHO ORDERED ---------- */
+function renderBoxChips(){
+  const all=people();
+  const items=[{k:'all',short:'All boxes'}].concat(GROUPS.filter(g=>g.k!=='check'||all.some(p=>groupOf(p)==='check')));
+  $('#boxChips').innerHTML=items.map(g=>{
+    const n=g.k==='all'?sumOf(all).n:sumOf(all.filter(p=>groupOf(p)===g.k)).n;
+    return `<button class="chip${g.k==='check'?' warn':''}" data-b="${g.k}" aria-pressed="${boxSel===g.k}">${g.short}<span class="c">${n}</span></button>`;
+  }).join('');
+}
+$('#boxChips').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;boxSel=b.dataset.b;renderBoxChips();renderOrders()});
+function renderOrders(){
+  const q=$('#oSearch').value.trim().toLowerCase(), pf=$('#oPaid').value, all=people();
+  const sections=[];
+  for(const g of GROUPS){
+    if(boxSel!=='all'&&boxSel!==g.k) continue;
+    const ordered=all.filter(p=>groupOf(p)===g.k&&hasOrder(ord(p.id)));
+    if(!ordered.length) continue;
+    const s=sumOf(ordered);
+    let rows=ordered.slice().sort((a,b)=>gradeRank(a.grade)-gradeRank(b.grade)||a.name.localeCompare(b.name));
+    if(q) rows=rows.filter(p=>p.name.toLowerCase().includes(q));
+    if(pf==='no') rows=rows.filter(p=>!ord(p.id).pay);
+    if(pf==='yes') rows=rows.filter(p=>ord(p.id).pay);
+    if(pf==='cash') rows=rows.filter(p=>ord(p.id).pay==='cash');
+    if(pf==='et') rows=rows.filter(p=>ord(p.id).pay==='et');
+    sections.push(`<div class="osec">
+      <div class="osec-h"><h3>${g.label}</h3>
+        <div class="ostats"><span><b>${s.n}</b> ordered</span><span class="c">Cheese <b>${s.c}</b></span><span class="s">Salami <b>${s.s}</b></span><span>Slices <b>${s.c+s.s}</b></span><span>Total <b>${money(s.total)}</b></span>${s.cash?`<span>Cash <b>${money(s.cash)}</b></span>`:''}${s.et?`<span>E-transfer <b>${money(s.et)}</b></span>`:''}${s.unpaid?`<span class="bad">Not paid <b>${money(s.unpaid)}</b> (${s.np})</span>`:'<span style="color:var(--ok)"><b>All paid</b></span>'}</div>
+      </div>
+      ${rows.length?rows.map(p=>{const o=ord(p.id);return `<div class="oline" data-id="${esc(p.id)}">
+        <button class="who" data-a="open">${esc(p.name)}<span>${esc(gradeShort(p.grade))}</span></button>
+        <span class="what">${whatTxt(o)}</span>
+        <span class="m">${money((o.c+o.s)*price)}</span>
+        <button class="ptog ${o.pay==='et'?'et':o.pay?'yes':'no'}" data-a="open" title="Change payment">${o.pay==='cash'?'Cash ✓':o.pay==='et'?'E-transfer ✓':'Not paid'}</button>
+        ${o.pay==='et'&&o.etFrom||o.note?`<span class="note">${o.pay==='et'&&o.etFrom?'E-transfer from '+esc(o.etFrom)+(o.note?' · ':''):''}${esc(o.note||'')}</span>`:''}
+      </div>`}).join(''):'<div class="oline"><span class="note">No one matches the filter here.</span></div>'}
+    </div>`);
+  }
+  renderOwesOld();
+  $('#olist').innerHTML=sections.length?sections.join(''):`<div class="empty"><h3>No orders yet</h3><div>Orders for ${dayLabel(day)} will show here.</div></div>`;
+}
+$('#olist').addEventListener('click',e=>{
+  const b=e.target.closest('[data-a]'); if(!b) return;
+  const id=b.closest('.oline').dataset.id;
+  if(b.dataset.a==='open') openSheet(id);
+});
+$('#oSearch').addEventListener('input',renderOrders);
+$('#oPaid').addEventListener('change',renderOrders);
+
+/* ---------- STILL OWES FROM EARLIER DAYS ---------- */
+function shortDate(d){const x=new Date(d+'T12:00:00');return isNaN(x)?d:x.toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'})}
+function oweKey(x){return x.date+'|'+x.id}
+function oweLine(x,showName){
+  const k=oweKey(x), what=[x.c?x.c+' Cheese':'',x.s?x.s+' Salami':''].filter(Boolean).join(' + ');
+  return `<div class="owe-line" data-k="${esc(k)}"><span>${showName?`<b>${esc(x.name)}</b> ${esc(gradeShort(x.grade))} · `:''}${esc(shortDate(x.date))} · ${what} · <b>${money(x.total)}</b>${x.note?' · '+esc(x.note):''}</span><span class="sp"></span>
+    ${etDraft===k?`<span class="etin"><input type="text" id="oweEt" placeholder="E-transfer sent by" maxlength="100"><button class="mini ok" data-ow="etsave">Save</button><button class="mini" data-ow="cancel">✕</button></span>`
+    :`<button class="mini" data-ow="cash">Paid cash</button><button class="mini" data-ow="et">Paid E-transfer</button>`}</div>`;
+}
+function oweBlock(id){
+  const l=owesOf(id); if(!l.length) return '';
+  return `<div class="owe"><b>Still owes ${money(l.reduce((a,x)=>a+x.total,0))} from earlier pizza days</b>${l.map(x=>oweLine(x,false)).join('')}</div>`;
+}
+function renderOwesOld(){
+  const box=$('#owesOld'), q=$('#oSearch').value.trim().toLowerCase();
+  let l=pastOwing.filter(x=>(boxSel==='all'||groupOf(x)===boxSel)&&(!q||x.name.toLowerCase().includes(q)));
+  if(!l.length||$('#oPaid').value==='yes'||$('#oPaid').value==='cash'||$('#oPaid').value==='et'){box.innerHTML='';return}
+  l=l.slice().sort((a,b)=>gradeRank(a.grade)-gradeRank(b.grade)||a.name.localeCompare(b.name)||(a.date<b.date?1:-1));
+  box.innerHTML=`<div class="osec" style="border-color:var(--bad)"><div class="osec-h" style="background:var(--bad-bg)"><h3 style="color:var(--bad)">Still owes from earlier pizza days</h3>
+    <div class="ostats"><span class="bad"><b>${new Set(l.map(x=>x.id)).size}</b> people · <b>${money(l.reduce((a,x)=>a+x.total,0))}</b> to collect</span></div></div>
+    <div style="padding:6px 14px 10px;display:grid;gap:6px">${l.map(x=>oweLine(x,true)).join('')}</div></div>`;
+}
+function markOld(k,pay,etFrom){
+  const x=pastOwing.find(y=>oweKey(y)===k); if(!x) return;
+  pastOwing=pastOwing.filter(y=>y!==x); etDraft=null;
+  renderAfterOwe(x.id);
+  api('saveOrder',{date:x.date,id:x.id,name:x.name,grade:x.grade,gender:x.gender,group:groupLabel(x),c:x.c,s:x.s,pay,etFrom:etFrom||'',note:x.note||'',price:x.price})
+    .then(()=>toast(`${x.name}: ${shortDate(x.date)} marked paid`))
+    .catch(e=>{pastOwing.push(x);renderAfterOwe(x.id);setStatus('Not saved – check internet ('+e+')',true)});
+}
+function renderAfterOwe(id){
+  if(view==='orders') renderOwesOld();
+  if(view==='take') refreshTile(id);
+  if(openId){const f=document.activeElement; renderSheetFull()}
+}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-ow]'); if(!b) return;
+  e.stopPropagation();
+  const k=b.closest('.owe-line').dataset.k, a=b.dataset.ow;
+  if(a==='cash') markOld(k,'cash');
+  else if(a==='et'){etDraft=k; renderAfterOwe((pastOwing.find(y=>oweKey(y)===k)||{}).id); setTimeout(()=>{const i=$('#oweEt');if(i)i.focus()},0)}
+  else if(a==='etsave') markOld(k,'et',($('#oweEt')||{}).value||'');
+  else if(a==='cancel'){etDraft=null; renderAfterOwe((pastOwing.find(y=>oweKey(y)===k)||{}).id)}
+},true);
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='oweEt'){const l=e.target.closest('.owe-line');if(l){e.preventDefault();markOld(l.dataset.k,'et',e.target.value)}}});
+
+/* ---------- STUDENT LIST ---------- */
 function parseRows(rows){
   rows=rows.map(r=>(r||[]).map(c=>String(c??'').trim())).filter(r=>r.some(c=>c));
   if(!rows.length) return [];
@@ -295,10 +653,12 @@ function showPreview(list){
   const box=$('#previewBox');
   if(!list.length){box.innerHTML='<div class="preview">No names found. Check that the first column has names.</div>';return}
   const counts={};list.forEach(p=>{const g=groupOf(p);counts[g]=(counts[g]||0)+1});
-  const chips=GROUPS.filter(g=>counts[g.k]).map(g=>`<span class="chip${g.k==='check'?' warn':''}">${g.label}: ${counts[g.k]}</span>`).join('');
+  const chips=GROUPS.filter(g=>counts[g.k]).map(g=>`<span class="chip${g.k==='check'?' warn':''}" style="min-height:0;padding:3px 10px">${g.label}: ${counts[g.k]}</span>`).join('');
+  const replace=$('#mode').value==='replace';
   box.innerHTML=`<div class="preview"><div><b>${list.length}</b> people found.</div><div class="chips">${chips}</div>
-    ${counts.check?'<div style="color:var(--bad)">Some people are missing a grade, or boy/girl for Grades 5–10. They will go in "Needs checking", where you can fix them.</div>':''}
-    <div class="rowflex">${$('#mode').value==='replace'?`<div style="color:var(--bad);font-weight:600">This will delete the ${roster.length} people already on the list and keep only these ${list.length}.</div>`:''}<button class="btn primary" id="saveRoster">${$('#mode').value==='replace'?'Replace whole list':'Add to list'}</button><button class="btn" id="cancelRoster">Cancel</button></div></div>`;
+    ${counts.check?'<div style="color:var(--bad)">Some are missing a grade, or Boy/Girl for Grades 5–10. You can fix them later by tapping their name.</div>':''}
+    ${replace?`<div style="color:var(--bad);font-weight:600">This will delete the ${roster.length} people already on the list and keep only these ${list.length}.</div>`:''}
+    <div class="rowflex"><button class="btn primary" id="saveRoster">${replace?'Replace whole list':'Add to list'}</button><button class="btn" id="cancelRoster">Cancel</button></div></div>`;
   $('#saveRoster').onclick=saveRoster;
   $('#cancelRoster').onclick=()=>{pendingPeople=null;box.innerHTML=''};
 }
@@ -306,23 +666,20 @@ $('#fileInput').addEventListener('change',async e=>{
   const f=e.target.files[0]; if(!f) return;
   try{
     const wb=XLSX.read(await f.arrayBuffer(),{type:'array'});
-    const ws=wb.Sheets[wb.SheetNames[0]];
-    showPreview(parseRows(XLSX.utils.sheet_to_json(ws,{header:1,defval:''})));
+    showPreview(parseRows(XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:''})));
   }catch(err){toast('Could not read that file. Save it as .xlsx or .csv and try again.')}
   e.target.value='';
 });
 $('#parseBtn').onclick=()=>showPreview(parseRows($('#pasteBox').value.split(/\r?\n/).map(l=>l.split(/\t|,/))));
 $('#mode').onchange=()=>{if(pendingPeople)showPreview(pendingPeople)};
-
 function dedupe(list){const m=new Map();list.forEach(p=>m.set(p.id,p));return [...m.values()]}
 let rosterChain=Promise.resolve();
-// mode 'add' sends only the changed people and never deletes anyone in the sheet.
 function writeRoster(list,mode,changed){
   roster=list; renderAll();
   const payload=(changed||list).map(p=>({id:p.id,name:p.name,grade:p.grade,gender:p.gender,group:groupLabel(p)}));
   setStatus('Saving list…');
   rosterChain=rosterChain.then(()=>api('saveRoster',{people:payload,mode:mode||'add'}))
-    .then(()=>{setStatus('List saved to spreadsheet');toast('List saved')})
+    .then(()=>{setStatus('List saved');toast('List saved')})
     .catch(e=>setStatus('Could not save the list: '+e,true));
   return rosterChain;
 }
@@ -330,94 +687,19 @@ function saveRoster(){
   if(!pendingPeople) return;
   const add=dedupe(pendingPeople), replace=$('#mode').value==='replace';
   pendingPeople=null;$('#previewBox').innerHTML='';$('#pasteBox').value='';
-  if(replace) writeRoster(add,'replace');
-  else writeRoster(dedupe(roster.concat(add)),'add',add);
+  if(replace) writeRoster(add,'replace'); else writeRoster(dedupe(roster.concat(add)),'add',add);
   $('#mode').value='add';
 }
 $('#addGrade').innerHTML='<option value="">—</option>'+GRADE_OPTS.map(g=>`<option value="${g}">${gradeTxt(g)}</option>`).join('');
 $('#addForm').addEventListener('submit',e=>{
   e.preventDefault();
   const name=$('#addName').value.trim().replace(/\s+/g,' '); if(!name) return;
-  const grade=$('#addGrade').value, gender=$('#addGender').value;
-  const np={id:makeId(name,grade),name,grade,gender};
+  const np={id:makeId(name,$('#addGrade').value),name,grade:$('#addGrade').value,gender:$('#addGender').value};
   writeRoster(dedupe(roster.concat([np])),'add',[np]);
-  $('#addName').value='';
+  $('#addName').value='';$('#addName').focus();
 });
 
-/* ---------- people + totals ---------- */
-function people(){
-  const m=new Map(roster.map(p=>[p.id,p]));
-  for(const [id,o] of orders) if(!m.has(id)&&o.name) m.set(id,{id,name:o.name,grade:o.grade||'',gender:o.gender||'',orphan:true});
-  return [...m.values()].sort((a,b)=>gradeRank(a.grade)-gradeRank(b.grade)||a.name.localeCompare(b.name));
-}
-function ord(id){return orders.get(id)||{c:0,s:0,paid:false,note:''}}
-function hasOrder(o){return (o.c||0)+(o.s||0)>0}
-function sumOf(list){
-  const t={c:0,s:0,total:0,paid:0,unpaid:0,n:0};
-  for(const p of list){const o=ord(p.id);if(!hasOrder(o))continue;const amt=(o.c+o.s)*price;t.n++;t.c+=o.c;t.s+=o.s;t.total+=amt;if(o.paid)t.paid+=amt;else t.unpaid+=amt}
-  return t;
-}
-
-/* ---------- rendering ---------- */
-function renderTabs(){
-  const all=people(), byG={};
-  all.forEach(p=>{const g=groupOf(p);(byG[g]=byG[g]||[]).push(p)});
-  const items=[{k:'all',label:'Everyone',list:all}].concat(GROUPS.filter(g=>g.k!=='check'||byG.check).map(g=>({...g,list:byG[g.k]||[]})));
-  if(!items.some(i=>i.k===tab)) tab='all';
-  $('#tabs').innerHTML=items.map(i=>{const s=sumOf(i.list);return `<button class="tab${i.k==='check'?' warn':''}" role="tab" data-k="${i.k}" aria-selected="${i.k===tab}">${i.label}<span class="c">${s.n?s.n+'/':''}${i.list.length}</span></button>`}).join('');
-}
-function currentList(){let l=people();return tab==='all'?l:l.filter(p=>groupOf(p)===tab)}
-function filtered(list){
-  const q=$('#search').value.trim().toLowerCase(), show=$('#show').value;
-  return list.filter(p=>{
-    if(q&&!p.name.toLowerCase().includes(q)) return false;
-    const o=ord(p.id);
-    if(show==='ordered'&&!hasOrder(o)) return false;
-    if(show==='unpaid'&&!(hasOrder(o)&&!o.paid)) return false;
-    return true;
-  });
-}
-function rowHTML(p){
-  return `<div class="row" data-id="${p.id}">
-    <div class="who"><button class="nm" data-act="edit" title="Edit this person"></button><span class="gr"></span></div>
-    <div class="ctl">
-      <div class="step cheese"><span class="lab">Cheese</span><button data-act="c-" aria-label="One less cheese">−</button><output></output><button data-act="c+" aria-label="One more cheese">+</button></div>
-      <div class="step salami"><span class="lab">Salami</span><button data-act="s-" aria-label="One less salami">−</button><output></output><button data-act="s+" aria-label="One more salami">+</button></div>
-      <span class="amt"></span>
-      <button class="paid" data-act="paid" aria-pressed="false"></button>
-      <button class="addnote" data-act="addnote">Comment</button>
-    </div>
-    <input type="text" class="note" id="note-${p.id}" placeholder="Comment (e.g. paid cash, absent)" maxlength="200">
-  </div>`;
-}
-function fillRow(el,p){
-  const o=ord(p.id);
-  el.querySelector('.nm').textContent=p.name;
-  el.querySelector('.gr').textContent=gradeTxt(p.grade)+(p.gender&&p.grade!=='Teacher'?' · '+(p.gender==='M'?'Boy':'Girl'):'');
-  const outs=el.querySelectorAll('output');outs[0].textContent=o.c||0;outs[1].textContent=o.s||0;
-  el.querySelector('.amt').textContent=money(((o.c||0)+(o.s||0))*price);
-  const pb=el.querySelector('.paid');pb.setAttribute('aria-pressed',String(!!o.paid));pb.textContent=o.paid?'Paid ✓':'Not paid';
-  const n=el.querySelector('.note'); if(document.activeElement!==n) n.value=o.note||'';
-  el.classList.toggle('has',hasOrder(o));el.classList.toggle('noted',!!o.note);
-}
-function renderGroupSum(){
-  const s=sumOf(currentList()),g=GROUPS.find(x=>x.k===tab);
-  $('#gTitle').textContent=g?g.label:'Everyone';
-  $('#gSum').textContent=s.n?`${s.n} ordered · Cheese ${s.c} · Salami ${s.s} · ${money(s.total)} (${money(s.unpaid)} not paid)`:(g&&g.sub?g.sub:'');
-}
-function renderList(){
-  const listEl=$('#list'); renderGroupSum();
-  if(!roster.length&&!orders.size){
-    listEl.innerHTML=loading?'<div class="empty">Loading the list from the spreadsheet…</div>':`<div class="empty"><h3>No student list yet</h3><div>Upload your list of students and teachers to start taking pizza orders.</div><button class="btn primary" id="openRoster">Upload student list</button></div>`;
-    const b=$('#openRoster'); if(b) b.onclick=()=>{$('#rosterPanel').open=true;$('#rosterPanel').scrollIntoView({behavior:'smooth'})};
-    return;
-  }
-  const list=filtered(currentList());
-  if(!list.length){listEl.innerHTML='<div class="empty">Nobody matches here.</div>';return}
-  listEl.innerHTML=list.map(rowHTML).join('');
-  const map=new Map(list.map(p=>[p.id,p]));
-  listEl.querySelectorAll('.row').forEach(el=>fillRow(el,map.get(el.dataset.id)));
-}
+/* ---------- render ---------- */
 function renderTotals(){
   const s=sumOf(people());
   $('#tCheese').textContent=s.c;$('#tSalami').textContent=s.s;$('#tTotal').textContent=money(s.total);
@@ -430,102 +712,55 @@ function renderDays(){
   const opts=[...new Set([...days,day])].sort().reverse();
   $('#daySelect').innerHTML=opts.map(d=>`<option value="${d}"${d===day?' selected':''}>${dayLabel(d)}${days.has(d)?'':' (new)'}</option>`).join('');
 }
-function renderAll(){renderTabs();renderList();renderTotals();renderDays();renderEditor()}
-function renderLight(){
-  renderTabs();renderGroupSum();renderTotals();
-  const map=new Map(people().map(p=>[p.id,p]));
-  $('#list').querySelectorAll('.row').forEach(el=>{const p=map.get(el.dataset.id);if(p)fillRow(el,p)});
+function renderView(){
+  document.querySelectorAll('.seg [data-view]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.view===view)));
+  $('#vTake').hidden=view!=='take'; $('#vOrders').hidden=view!=='orders'; $('#vList').hidden=view!=='list';
+}
+function renderAll(){
+  renderView(); renderTotals(); renderDays();
+  if(view==='take'){renderGradeChips();renderNames()}
+  if(view==='orders'){renderBoxChips();renderOrders()}
+  renderSheet();
+}
+// after one order changes: update only what's needed (no jumping)
+function renderAfterOrder(id){
+  renderTotals();
+  if(view==='take'){renderGradeChips();refreshTile(id)}
+  if(view==='orders'){renderBoxChips();renderOrders()}
+  renderSheet();
 }
 
-/* ---------- editing a person ---------- */
-function renderEditor(){
-  const box=$('#editor');
-  const p=editing&&people().find(x=>x.id===editing);
-  if(!p){box.innerHTML='';return}
-  box.innerHTML=`<form class="panel editor" id="editForm">
-    <h3 style="font-size:1rem">Edit person</h3>
-    <div class="rowflex">
-      <label class="f">Name <input type="text" id="edName"></label>
-      <label class="f">Grade <select id="edGrade"><option value="">—</option>${GRADE_OPTS.map(g=>`<option value="${g}">${gradeTxt(g)}</option>`).join('')}</select></label>
-      <label class="f">Boy / Girl <select id="edGender"><option value="">—</option><option value="M">Boy</option><option value="F">Girl</option></select></label>
-    </div>
-    <div class="rowflex"><button class="btn primary" type="submit">Save</button><button class="btn" type="button" id="edCancel">Cancel</button><button class="btn" type="button" id="edRemove" style="color:var(--bad)">Remove from list</button></div>
-  </form>`;
-  $('#edName').value=p.name;$('#edGrade').value=p.grade||'';$('#edGender').value=p.gender||'';
-  $('#edCancel').onclick=()=>{editing=null;renderEditor()};
-  $('#edRemove').onclick=()=>{
-    const b=$('#edRemove');
-    if(b.dataset.sure){
-      editing=null;roster=roster.filter(x=>x.id!==p.id);renderAll();
-      api('removePerson',{id:p.id}).then(()=>toast('Removed '+p.name)).catch(e=>setStatus('Could not remove: '+e,true));
-    }
-    else{b.dataset.sure='1';b.textContent='Tap again to remove'}
-  };
-  $('#editForm').onsubmit=e=>{
-    e.preventDefault();
-    const np={id:p.id,name:$('#edName').value.trim()||p.name,grade:$('#edGrade').value,gender:$('#edGender').value};
-    const list=roster.some(x=>x.id===p.id)?roster.map(x=>x.id===p.id?np:x):roster.concat([np]);
-    editing=null;writeRoster(list,'add',[np]);
-    if(orders.has(p.id)) changeOrder(p.id,{});
-  };
-  box.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-/* ---------- orders ---------- */
+/* ---------- saving orders ---------- */
 function changeOrder(id,patch){
-  const p=people().find(x=>x.id===id); if(!p) return;
+  const p=person(id); if(!p) return;
   const o={...ord(id),...patch,name:p.name,grade:p.grade||'',gender:p.gender||''};
-  o.c=Math.max(0,Math.min(20,o.c||0));o.s=Math.max(0,Math.min(20,o.s||0));
+  o.c=Math.max(0,Math.min(20,o.c||0)); o.s=Math.max(0,Math.min(20,o.s||0));
+  o.pay=o.pay||''; if(o.pay!=='et') o.etFrom=''; o.paid=!!o.pay;
   orders.set(id,o);
-  const v=(dirty.get(id)||0)+1;dirty.set(id,v);
-  renderLight();
+  const v=(dirty.get(id)||0)+1; dirty.set(id,v);
+  renderAfterOrder(id);
   clearTimeout(timers.get(id));
-  timers.set(id,setTimeout(()=>saveOrder(id,v),600));
+  timers.set(id,setTimeout(()=>saveOrder(id,v),500));
 }
 function saveOrder(id,v){
   setStatus('Saving…');
-  const d=day;
-  const prev=chains.get(id)||Promise.resolve();
+  const d=day, prev=chains.get(id)||Promise.resolve();
   const next=prev.then(()=>{
     const o=orders.get(id); if(!o) return;
-    const p={id,name:o.name,grade:o.grade,gender:o.gender};
-    return api('saveOrder',{date:d,id,name:o.name,grade:o.grade,gender:o.gender,group:groupLabel(p),c:o.c,s:o.s,paid:!!o.paid,note:o.note||'',price});
+    return api('saveOrder',{date:d,id,name:o.name,grade:o.grade,gender:o.gender,group:groupLabel(o),c:o.c,s:o.s,pay:o.pay||'',etFrom:o.etFrom||'',note:o.note||'',price});
   }).then(()=>{
-    if(dirty.get(id)===v)dirty.delete(id);
+    if(dirty.get(id)===v) dirty.delete(id);
     if(!days.has(d)){days.add(d);renderDays()}
-    if(!dirty.size)setStatus('All changes saved to the spreadsheet');
-  }).catch(e=>setStatus(e==='NO_URL'?'Not connected to the spreadsheet.':'Could not save. Check your internet; your change is still on screen. ('+e+')',true));
+    if(!dirty.size) setStatus('All saved ✓');
+  }).catch(e=>setStatus(e==='NO_URL'?'Not connected to the spreadsheet.':'Not saved – check internet ('+e+')',true));
   chains.set(id,next.catch(()=>{}));
 }
-$('#list').addEventListener('click',e=>{
-  const b=e.target.closest('[data-act]'); if(!b) return;
-  const id=b.closest('.row').dataset.id, o=ord(id), a=b.dataset.act;
-  if(a==='c+')changeOrder(id,{c:(o.c||0)+1});
-  else if(a==='c-')changeOrder(id,{c:(o.c||0)-1});
-  else if(a==='s+')changeOrder(id,{s:(o.s||0)+1});
-  else if(a==='s-')changeOrder(id,{s:(o.s||0)-1});
-  else if(a==='paid')changeOrder(id,{paid:!o.paid});
-  else if(a==='addnote'){const row=b.closest('.row');row.classList.add('noted');row.querySelector('.note').focus()}
-  else if(a==='edit'){editing=id;renderEditor()}
-});
-$('#list').addEventListener('input',e=>{
-  if(!e.target.classList.contains('note')) return;
-  const id=e.target.closest('.row').dataset.id, val=e.target.value;
-  orders.set(id,{...ord(id),note:val});
-  dirty.set(id,(dirty.get(id)||0)+1);
-  clearTimeout(timers.get('n'+id));
-  timers.set('n'+id,setTimeout(()=>changeOrder(id,{note:val}),700));
-});
-$('#tabs').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;tab=b.dataset.k;editing=null;renderAll()});
-$('#search').addEventListener('input',renderList);
-$('#show').addEventListener('change',renderList);
+window.addEventListener('beforeunload',e=>{if(dirty.size){e.preventDefault();e.returnValue=''}});
 
 /* ---------- day + price ---------- */
 function switchDay(d){
   if(!d||d===day) return;
-  day=d;$('#dayInput').value=d;
-  orders=new Map();dirty.clear();
-  renderAll();load();
+  day=d; $('#dayInput').value=d; orders=new Map(); dirty.clear(); closeSheet(); renderAll(); load();
 }
 $('#dayInput').value=day;
 $('#dayInput').addEventListener('change',e=>switchDay(e.target.value));
@@ -533,149 +768,196 @@ $('#daySelect').addEventListener('change',e=>switchDay(e.target.value));
 let priceTimer;
 $('#priceInput').addEventListener('input',e=>{
   const v=parseFloat(e.target.value); if(!(v>=0)) return;
-  price=v;renderLight();
+  price=v; renderAll();
   clearTimeout(priceTimer);
   priceTimer=setTimeout(()=>api('setPrice',{price:v}).then(()=>setStatus('Price saved')).catch(err=>setStatus('Could not save price: '+err,true)),800);
 });
 
-/* ---------- loading from the spreadsheet ---------- */
+/* ---------- load from spreadsheet ---------- */
 async function load(){
   if(loading) return;
   loading=true;
   const d=day;
   try{
     const r=await api('load',{date:d});
-    if(d!==day){loading=false;return}
+    loading=false;
+    if(d!==day) return;
     if(r.url){const a=$('#sheetLink');a.href=r.url;a.hidden=false}
     if(document.activeElement!==$('#priceInput')) price=Number(r.price)||0;
     days=new Set(r.days||[]);
     let missingIds=false;
-    const list=(r.students||[]).map(s=>{
+    roster=dedupe((r.students||[]).map(s=>{
       const name=String(s.name||'').trim().replace(/\s+/g,' '); if(!name) return null;
       const grade=normGrade(s.grade), gender=normGender(s.gender);
       if(!s.id) missingIds=true;
       return {id:s.id||makeId(name,grade),name,grade,gender};
-    }).filter(Boolean);
-    roster=dedupe(list);
+    }).filter(Boolean));
     const next=new Map();
-    (r.orders||[]).forEach(o=>next.set(o.id,{c:+o.c||0,s:+o.s||0,paid:!!o.paid,note:o.note||'',name:o.name,grade:normGrade(o.grade),gender:normGender(o.gender)}));
-    for(const id of dirty.keys()){ if(orders.has(id)) next.set(id,orders.get(id)); }
-    const changed=JSON.stringify([...next])!==JSON.stringify([...orders]);
+    pastOwing=(r.pastUnpaid||[]).map(x=>({...x,grade:normGrade(x.grade),gender:normGender(x.gender),c:+x.c||0,s:+x.s||0,price:isFinite(+x.price)?+x.price:price,total:((+x.c||0)+(+x.s||0))*(isFinite(+x.price)?+x.price:price)}));
+    if(r.backupUrl){const a=$('#backupLink');a.href=r.backupUrl;a.hidden=false}
+    (r.orders||[]).forEach(o=>next.set(o.id,{c:+o.c||0,s:+o.s||0,pay:o.pay||'',etFrom:o.etFrom||'',paid:!!o.pay,note:o.note||'',name:o.name,grade:normGrade(o.grade),gender:normGender(o.gender)}));
+    for(const id of dirty.keys()) if(orders.has(id)) next.set(id,orders.get(id));
     orders=next;
-    loading=false;
-    const typing=document.activeElement&&document.activeElement.classList.contains('note');
-    if(typing&&!changed) renderLight(); else if(typing) renderLight(); else renderAll();
+    const typing=document.activeElement&&['search','oSearch','shNote','shEt','oweEt','edName'].includes(document.activeElement.id);
+    if(typing){renderTotals();renderDays();if(view==='take')renderGradeChips()} else renderAll();
     if(!dirty.size) setStatus('Up to date · '+new Date().toLocaleTimeString('en-CA',{hour:'numeric',minute:'2-digit'}));
-    if(!roster.length) $('#rosterPanel').open=true;
-    if(missingIds) writeRoster(roster,'add'); // gives names typed into the sheet a permanent ID
+    if(!roster.length&&!orders.size){view='list';renderAll()}
+    if(missingIds) writeRoster(roster,'add');
   }catch(e){
     loading=false;
-    if(e==='NO_URL'){
-      const b=$('#cfgBanner');b.hidden=false;
-      b.textContent='This page is not connected to the spreadsheet yet. Open it from the Apps Script web app link, or paste that link into SCRIPT_URL at the top of the script.';
-      setStatus('');
-    } else setStatus('Could not load from the spreadsheet: '+e,true);
+    if(e==='NO_URL'){const b=$('#cfgBanner');b.hidden=false;b.textContent='This page is not connected to the spreadsheet. Open it from the Apps Script web app link, or put that link in SCRIPT_URL.';setStatus('')}
+    else setStatus('Could not load: '+e,true);
     renderAll();
   }
 }
 $('#refreshBtn').addEventListener('click',load);
-// Pick up orders entered on other devices every 30 seconds.
-setInterval(()=>{if(!document.hidden&&!dirty.size&&!editing)load()},30000);
+setInterval(()=>{if(!document.hidden&&!dirty.size&&!openId)load()},30000);
 
-/* ---------- PDF slips ---------- */
+/* ---------- PDF ---------- */
 function groupedOrders(){
   const all=people(), out=[];
-  for(const g of GROUPS){
-    const rows=all.filter(p=>groupOf(p)===g.k&&hasOrder(ord(p.id)));
-    if(rows.length) out.push({g,rows});
-  }
+  for(const g of GROUPS){const rows=all.filter(p=>groupOf(p)===g.k&&hasOrder(ord(p.id)));if(rows.length)out.push({g,rows})}
   return out;
 }
+function whatPlain(c,s){return [c?c+' Cheese':'',s?s+' Salami':''].filter(Boolean).join(', ')}
+// Save on this device and keep a copy in the Google Drive backup folder.
+function finishPdf(doc,filename){
+  try{doc.save(filename)}catch(e){}
+  setStatus('Saving backup to Google Drive…');
+  const b64=doc.output('datauristring').split(',')[1];
+  api('savePdf',{name:filename,b64}).then(r=>{
+    setStatus('Backup saved ✓');
+    if(r&&r.folderUrl){const a=$('#backupLink');a.href=r.folderUrl;a.hidden=false}
+    if(r&&r.url){const t=$('#toast');t.innerHTML=`Backup saved in Google Drive · <a href="${r.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Open PDF</a>`;t.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>t.hidden=true,8000)}
+  }).catch(e=>setStatus('PDF made, but backup failed: '+e,true));
+}
+
+/* One page: a cut-out slip for every pizza box. Text shrinks until it all fits. */
 $('#pdfBtn').addEventListener('click',()=>{
   const groups=groupedOrders();
   if(!groups.length){toast('No orders yet for this day');return}
   if(!window.jspdf){toast('The PDF tool did not load. Reload the page and try again.');return}
   const {jsPDF}=window.jspdf;
   const doc=new jsPDF({unit:'pt',format:'letter'});
-  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),M=36;
-  const when=dayLabel(day), RED=[194,65,28];
-  let y=M,first=true;
-  for(const {g,rows} of groups){
-    const s=sumOf(rows);
-    const need=80+Math.min(rows.length,5)*18;
-    if(!first){
-      if(y+need>H-M){doc.addPage();y=M}
-      else{
-        doc.setDrawColor(120);doc.setLineDashPattern([4,3],0);doc.setLineWidth(.8);doc.line(M,y+10,W-M,y+10);doc.setLineDashPattern([],0);
-        doc.setFontSize(7);doc.setTextColor(120);doc.setFont('helvetica','normal');doc.text('cut here',W/2,y+7,{align:'center'});
-        y+=28;
+  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),M=22,GAP=10,VG=10;
+  const colW=(W-2*M-GAP)/2, HEAD=40, top=M+HEAD, avail=H-M-top;
+  const all=sumOf(people()), when=dayLabel(day);
+  const slips=groups.map(({g,rows})=>{
+    const lines=[];
+    rows.forEach(p=>{const o=ord(p.id);lines.push({p,o});owesOf(p.id).forEach(x=>lines.push({owe:x}))});
+    return {g,rows,s:sumOf(rows),lines};
+  });
+  const pad=6;
+  const slipH=(sl,fs)=>{const lh=fs*1.38;return pad+(fs+2)*1.35+lh*1.1+3+sl.lines.length*lh+pad};
+  function place(fs,multi){
+    const pages=[[]];let col=[0,0];
+    for(const sl of slips){
+      const h=slipH(sl,fs); let c=col[0]<=col[1]?0:1;
+      if(col[c]+h>avail){c=1-c; if(col[c]+h>avail){ if(!multi) return null; pages.push([]); col=[0,0]; c=0; }}
+      pages[pages.length-1].push({sl,x:M+c*(colW+GAP),y:top+col[c],h}); col[c]+=h+VG;
+    }
+    return pages;
+  }
+  let fs=10, pages=null;
+  for(;fs>=5.5;fs-=0.25){pages=place(fs,false);if(pages)break}
+  if(!pages){fs=5.5;pages=place(fs,true)}
+  const fit=(t,w)=>{t=String(t);if(doc.getTextWidth(t)<=w)return t;while(t.length>1&&doc.getTextWidth(t+'…')>w)t=t.slice(0,-1);return t+'…'};
+  const RED=[180,38,28],GREEN=[46,122,76],DARK=[30,30,30],GREY=[110,110,110];
+  pages.forEach((pg,pi)=>{
+    if(pi) doc.addPage();
+    // page header = order for the pizza shop
+    doc.setTextColor(...DARK);doc.setFont('helvetica','bold');doc.setFontSize(14);
+    doc.text('Pizza Day – '+when,M,M+12);
+    doc.setFont('helvetica','normal');doc.setFontSize(9.5);
+    doc.text(`Cheese ${all.c}   ·   Salami ${all.s}   ·   ${all.c+all.s} slices   ·   Total ${money(all.total)}   ·   Cash ${money(all.cash)}   ·   E-transfer ${money(all.et)}   ·   Not paid ${money(all.unpaid)}`,M,M+27);
+    if(pages.length>1){doc.setFontSize(8);doc.setTextColor(...GREY);doc.text(`Page ${pi+1} of ${pages.length}`,W-M,M+12,{align:'right'})}
+    for(const {sl,x,y,h} of pg){
+      const lh=fs*1.38, w=colW;
+      doc.setDrawColor(120);doc.setLineWidth(.7);doc.setLineDashPattern([3,2.5],0);doc.rect(x,y,w,h);doc.setLineDashPattern([],0);
+      let cy=y+pad+fs+1;
+      doc.setTextColor(...DARK);doc.setFont('helvetica','bold');doc.setFontSize(fs+2);doc.text(sl.g.label,x+pad,cy);
+      doc.setFont('helvetica','normal');doc.setFontSize(fs-0.5);doc.setTextColor(...GREY);doc.text(shortDate(day),x+w-pad,cy,{align:'right'});
+      cy+=lh*1.1+1;
+      doc.setFontSize(fs);doc.setTextColor(...DARK);doc.setFont('helvetica','bold');
+      let st=`Cheese ${sl.s.c}  ·  Salami ${sl.s.s}  ·  ${money(sl.s.total)}`;
+      doc.text(st,x+pad,cy);
+      if(sl.s.unpaid){doc.setTextColor(...RED);doc.text(`Not paid ${money(sl.s.unpaid)}`,x+w-pad,cy,{align:'right'})}
+      cy+=2; doc.setDrawColor(190);doc.setLineWidth(.4);doc.line(x+pad,cy+1,x+w-pad,cy+1); cy+=lh-1;
+      const multiGrade=new Set(sl.rows.map(p=>p.grade)).size>1;
+      const cName=x+pad, cWhat=x+w*0.47, cAmt=x+w*0.80, cPay=x+w*0.82;
+      doc.setFontSize(fs);
+      for(const ln of sl.lines){
+        if(ln.owe){
+          doc.setFont('helvetica','italic');doc.setTextColor(...RED);
+          doc.text(fit(`   also owes ${money(ln.owe.total)} from ${shortDate(ln.owe.date)} (${whatPlain(ln.owe.c,ln.owe.s)})`,w-2*pad),cName,cy);
+        } else {
+          const {p,o}=ln;
+          doc.setTextColor(...DARK);doc.setFont('helvetica','normal');
+          doc.text(fit(p.name+(multiGrade?` (${gradeShort(p.grade)})`:''),cWhat-cName-4),cName,cy);
+          doc.text(fit(whatPlain(o.c,o.s),cAmt-cWhat-22),cWhat,cy);
+          doc.text(money((o.c+o.s)*price),cAmt,cy,{align:'right'});
+          if(o.pay){doc.setTextColor(...GREEN);doc.text(o.pay==='et'?'ET':'Cash',cPay,cy)}
+          else{doc.setTextColor(...RED);doc.setFont('helvetica','bold');doc.text('NOT PAID',cPay,cy)}
+        }
+        cy+=lh;
       }
     }
-    first=false;
-    doc.setTextColor(30);doc.setFont('helvetica','bold');doc.setFontSize(15);doc.text(g.label,M,y+12);
-    doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text('Pizza Day - '+when,W-M,y+12,{align:'right'});
-    y+=26;
-    doc.setTextColor(60);
-    doc.text(`${s.n} ordered    Cheese: ${s.c}    Salami: ${s.s}    Slices: ${s.c+s.s}    Total: ${money(s.total)}`,M,y);
-    y+=8;
-    doc.autoTable({
-      startY:y,margin:{left:M,right:M},theme:'grid',
-      head:[['#','Name','Grade','Cheese','Salami','Total','Paid','Comment']],
-      body:rows.map((p,i)=>{const o=ord(p.id);return [i+1,p.name,gradeTxt(p.grade),o.c||'',o.s||'',money((o.c+o.s)*price),o.paid?'Paid':'NOT PAID',o.note||'']}),
-      foot:[['','Total','',String(s.c),String(s.s),money(s.total),'Paid '+money(s.paid),s.unpaid?'Not paid '+money(s.unpaid):'All paid']],
-      showFoot:'lastPage',
-      styles:{fontSize:9,cellPadding:4,textColor:30,lineColor:180,lineWidth:.5,valign:'middle'},
-      headStyles:{fillColor:RED,textColor:255,fontStyle:'bold'},
-      footStyles:{fillColor:[240,236,230],textColor:30,fontStyle:'bold'},
-      columnStyles:{0:{cellWidth:22,halign:'right'},1:{cellWidth:150},2:{cellWidth:50},3:{cellWidth:44,halign:'center'},4:{cellWidth:44,halign:'center'},5:{cellWidth:44,halign:'right'},6:{cellWidth:58,halign:'center'},7:{cellWidth:'auto'}},
-      didParseCell:d=>{if(d.section==='body'&&d.column.index===6){if(d.cell.raw==='Paid')d.cell.styles.textColor=[46,122,76];else{d.cell.styles.textColor=[180,38,28];d.cell.styles.fontStyle='bold'}}}
-    });
-    y=doc.lastAutoTable.finalY+14;
-  }
-  // Summary page for ordering from the pizza shop
-  doc.addPage();
-  doc.setTextColor(30);doc.setFont('helvetica','bold');doc.setFontSize(16);doc.text('Pizza order summary',M,M+12);
-  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(when+'   |   '+money(price)+' per slice',M,M+28);
+  });
+  finishPdf(doc,`Pizza Day ${day} - box slips.pdf`);
+});
+
+/* Full report: one table per box, summary by grade, everyone who still owes (today + earlier days). */
+$('#reportBtn').addEventListener('click',()=>{
+  const groups=groupedOrders();
+  if(!groups.length&&!pastOwing.length){toast('No orders yet for this day');return}
+  if(!window.jspdf){toast('The PDF tool did not load. Reload the page and try again.');return}
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'pt',format:'letter'});
+  const W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight(),M=36;
+  const when=dayLabel(day), RED=[194,65,28];
+  const tbl={theme:'grid',margin:{left:M,right:M},styles:{fontSize:9,cellPadding:4,textColor:30,lineColor:180,lineWidth:.5,valign:'middle'},headStyles:{fillColor:RED,textColor:255,fontStyle:'bold'},footStyles:{fillColor:[240,236,230],textColor:30,fontStyle:'bold'}};
+  const payCell=d=>{if(d.section==='body'&&d.column.raw==='pay'){} };
   const everyone=people(), all=sumOf(everyone);
-  const numCols={1:{halign:'center'},2:{halign:'center'},3:{halign:'center'},4:{halign:'center'},5:{halign:'right'},6:{halign:'right'},7:{halign:'right'}};
-  const tblStyle={styles:{fontSize:10,cellPadding:5,textColor:30,lineColor:180,lineWidth:.5},headStyles:{fillColor:RED,textColor:255},footStyles:{fillColor:[240,236,230],textColor:30,fontStyle:'bold'}};
-  // Each grade on its own line
-  const gradeKeys=GRADE_OPTS.concat(['']);
-  const gradeRows=gradeKeys.map(gk=>{
-    const list=everyone.filter(p=>(p.grade||'')===gk), s=sumOf(list);
-    return s.n?[gk===''?'Grade missing':(gk==='Teacher'?'Teachers':gradeTxt(gk).replace('Gr ','Grade ')),s.n,s.c,s.s,s.c+s.s,money(s.total),money(s.paid),money(s.unpaid)]:null;
+  doc.setTextColor(30);doc.setFont('helvetica','bold');doc.setFontSize(16);doc.text('Pizza Day report – '+when,M,M+12);
+  doc.setFont('helvetica','normal');doc.setFontSize(10);
+  doc.text(`${money(price)} per slice   |   ${all.n} ordered   |   Cheese ${all.c}   |   Salami ${all.s}   |   Total ${money(all.total)}`,M,M+28);
+  doc.text(`Cash ${money(all.cash)}   |   E-transfer ${money(all.et)}   |   Not paid ${money(all.unpaid)}`,M,M+42);
+  const numCols={1:{halign:'center'},2:{halign:'center'},3:{halign:'center'},4:{halign:'right'},5:{halign:'right'},6:{halign:'right'},7:{halign:'right'}};
+  const gradeRows=GRADE_OPTS.concat(['']).map(gk=>{
+    const s=sumOf(everyone.filter(p=>(p.grade||'')===gk));
+    return s.n?[gk===''?'Grade missing':(gk==='Teacher'?'Teachers':gradeTxt(gk).replace('Gr ','Grade ')),s.n,s.c,s.s,money(s.total),money(s.cash),money(s.et),money(s.unpaid)]:null;
   }).filter(Boolean);
-  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.text('By grade',M,M+52);
-  doc.autoTable({...tblStyle,startY:M+60,margin:{left:M,right:M},theme:'grid',columnStyles:numCols,
-    head:[['Grade','Ordered','Cheese','Salami','Slices','Total','Paid','Not paid']],
-    body:gradeRows,
-    foot:[['All grades',all.n,all.c,all.s,all.c+all.s,money(all.total),money(all.paid),money(all.unpaid)]]});
-  // By box group
-  let sy=doc.lastAutoTable.finalY+24;
-  if(sy>H-160){doc.addPage();sy=M+12}
-  doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(30);doc.text('By box',M,sy);
-  doc.autoTable({...tblStyle,startY:sy+8,margin:{left:M,right:M},theme:'grid',columnStyles:numCols,
-    head:[['Box','Ordered','Cheese','Salami','Slices','Total','Paid','Not paid']],
-    body:groups.map(({g,rows})=>{const s=sumOf(rows);return [g.label,s.n,s.c,s.s,s.c+s.s,money(s.total),money(s.paid),money(s.unpaid)]}),
-    foot:[['All boxes',all.n,all.c,all.s,all.c+all.s,money(all.total),money(all.paid),money(all.unpaid)]]});
-  // Still owes
-  const owing=everyone.filter(p=>{const o=ord(p.id);return hasOrder(o)&&!o.paid});
+  doc.autoTable({...tbl,startY:M+56,columnStyles:numCols,
+    head:[['Grade','Ordered','Cheese','Salami','Total','Cash','E-transfer','Not paid']],body:gradeRows,
+    foot:[['All',all.n,all.c,all.s,money(all.total),money(all.cash),money(all.et),money(all.unpaid)]]});
+  for(const {g,rows} of groups){
+    const s=sumOf(rows); let y=doc.lastAutoTable.finalY+22;
+    if(y>H-120){doc.addPage();y=M+10}
+    doc.setFont('helvetica','bold');doc.setFontSize(12);doc.setTextColor(30);doc.text(g.label,M,y);
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(`${s.n} ordered · Cheese ${s.c} · Salami ${s.s} · ${money(s.total)} · Not paid ${money(s.unpaid)}`,W-M,y,{align:'right'});
+    doc.autoTable({...tbl,startY:y+6,
+      head:[['Name','Grade','Cheese','Salami','Total','Paid','Comment']],
+      body:rows.map(p=>{const o=ord(p.id);return [p.name,gradeTxt(p.grade),o.c||'',o.s||'',money((o.c+o.s)*price),payTxt(o),o.note||'']}),
+      columnStyles:{0:{cellWidth:130},1:{cellWidth:50},2:{cellWidth:44,halign:'center'},3:{cellWidth:44,halign:'center'},4:{cellWidth:44,halign:'right'},5:{cellWidth:110},6:{cellWidth:'auto'}},
+      didParseCell:d=>{if(d.section==='body'&&d.column.index===5){if(d.cell.raw==='Not paid'){d.cell.styles.textColor=[180,38,28];d.cell.styles.fontStyle='bold'}else d.cell.styles.textColor=[46,122,76]}}});
+  }
+  // Still owes: today + earlier days
+  const owing=everyone.filter(p=>{const o=ord(p.id);return hasOrder(o)&&!o.pay}).map(p=>{const o=ord(p.id);return {date:day,name:p.name,grade:p.grade,c:o.c,s:o.s,total:(o.c+o.s)*price,note:o.note}})
+    .concat(pastOwing.map(x=>({...x}))).sort((a,b)=>gradeRank(a.grade)-gradeRank(b.grade)||a.name.localeCompare(b.name)||(a.date<b.date?1:-1));
   doc.addPage();
   doc.setTextColor(30);doc.setFont('helvetica','bold');doc.setFontSize(16);doc.text('Still owes',M,M+12);
-  doc.setFont('helvetica','normal');doc.setFontSize(10);
-  doc.text(when+'   |   '+owing.length+' people   |   '+money(all.unpaid)+' to collect',M,M+28);
+  const owTot=owing.reduce((a,x)=>a+x.total,0);
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(`As of ${when}   |   ${new Set(owing.map(x=>x.name)).size} people   |   ${money(owTot)} to collect (includes earlier pizza days)`,M,M+28);
   if(owing.length){
-    doc.autoTable({...tblStyle,startY:M+40,margin:{left:M,right:M},theme:'grid',
-      head:[['#','Name','Grade','Cheese','Salami','Owes','Comment','Paid?']],
-      body:owing.map((p,i)=>{const o=ord(p.id);return [i+1,p.name,p.grade==='Teacher'?'Teacher':gradeTxt(p.grade),o.c||'',o.s||'',money((o.c+o.s)*price),o.note||'','']}),
-      foot:[['','Total','','','',money(all.unpaid),'','']],
-      columnStyles:{0:{cellWidth:22,halign:'right'},1:{cellWidth:150},2:{cellWidth:56},3:{cellWidth:44,halign:'center'},4:{cellWidth:44,halign:'center'},5:{cellWidth:48,halign:'right'},6:{cellWidth:'auto'},7:{cellWidth:44}}});
-  } else {
-    doc.setFontSize(12);doc.text('Everyone has paid.',M,M+56);
-  }
-  const pages=doc.internal.getNumberOfPages();
-  for(let i=1;i<=pages;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(140);doc.text(`Page ${i} of ${pages}`,W-M,H-18,{align:'right'})}
-  doc.save(`pizza-day-${day}.pdf`);
+    doc.autoTable({...tbl,startY:M+40,
+      head:[['Name','Grade','Pizza day','What','Owes','Comment','Paid?']],
+      body:owing.map(x=>[x.name,gradeTxt(x.grade),shortDate(x.date),whatPlain(x.c,x.s),money(x.total),x.note||'','']),
+      foot:[['Total','','','',money(owTot),'','']],
+      columnStyles:{0:{cellWidth:120},1:{cellWidth:46},2:{cellWidth:76},3:{cellWidth:90},4:{cellWidth:44,halign:'right'},5:{cellWidth:'auto'},6:{cellWidth:40}}});
+  } else {doc.setFontSize(12);doc.text('Everyone has paid.',M,M+56)}
+  const n=doc.internal.getNumberOfPages();
+  for(let i=1;i<=n;i++){doc.setPage(i);doc.setFontSize(8);doc.setTextColor(140);doc.text(`Page ${i} of ${n}`,W-M,H-18,{align:'right'})}
+  finishPdf(doc,`Pizza Day ${day} - report.pdf`);
 });
 
 renderAll();
